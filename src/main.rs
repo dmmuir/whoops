@@ -7,10 +7,14 @@ fn main() -> io::Result<()> {
         let mut line = line.unwrap_or(String::new());
 
         match command(line.as_bytes()) {
-            Some(output) => io::stdout().write_all(&output).unwrap(),
+            Some(output) => io::stdout()
+                .write_all(&output)
+                .expect("Could not write to stdin."),
             None => {
                 line.push('\n'); // adding `\n` char 0x0A.
-                io::stdout().write_all(line.as_bytes()).unwrap();
+                io::stdout()
+                    .write_all(line.as_bytes())
+                    .expect("Could not write passthrough to stdout.");
             }
         };
     }
